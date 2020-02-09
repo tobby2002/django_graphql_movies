@@ -1,6 +1,6 @@
-import graphene
+import graphene as g
 from graphene_django.types import DjangoObjectType, ObjectType
-from django_graphql_movies.movies.models import Actor, Movie
+from app.movies.models import Actor, Movie
 
 
 # Create a GraphQL type for the actor model
@@ -17,17 +17,16 @@ class MovieType(DjangoObjectType):
 
 # Create a Query type
 class Query(ObjectType):
-    actor = graphene.Field(ActorType, id=graphene.Int())
-    movie = graphene.Field(MovieType, id=graphene.Int())
-    actors = graphene.List(ActorType)
-    movies= graphene.List(MovieType)
+    actor = g.Field(ActorType, id=g.Int())
+    movie = g.Field(MovieType, id=g.Int())
+    actors = g.List(ActorType)
+    movies = g.List(MovieType)
 
     def resolve_actor(self, info, **kwargs):
         id = kwargs.get('id')
 
         if id is not None:
             return Actor.objects.get(pk=id)
-
         return None
 
     def resolve_movie(self, info, **kwargs):
@@ -35,7 +34,6 @@ class Query(ObjectType):
 
         if id is not None:
             return Movie.objects.get(pk=id)
-
         return None
 
     def resolve_actors(self, info, **kwargs):
@@ -46,23 +44,23 @@ class Query(ObjectType):
 
 
 # Create Input Object Types
-class ActorInput(graphene.InputObjectType):
-    id = graphene.ID()
-    name = graphene.String()
+class ActorInput(g.InputObjectType):
+    id = g.ID()
+    name = g.String()
 
-class MovieInput(graphene.InputObjectType):
-    id = graphene.ID()
-    title = graphene.String()
-    actors = graphene.List(ActorInput)
-    year = graphene.Int()
+class MovieInput(g.InputObjectType):
+    id = g.ID()
+    title = g.String()
+    actors = g.List(ActorInput)
+    year = g.Int()
 
 # Create mutations for actors
-class CreateActor(graphene.Mutation):
+class CreateActor(g.Mutation):
     class Arguments:
         input = ActorInput(required=True)
 
-    ok = graphene.Boolean()
-    actor = graphene.Field(ActorType)
+    ok = g.Boolean()
+    actor = g.Field(ActorType)
 
     @staticmethod
     def mutate(root, info, input=None):
@@ -72,13 +70,13 @@ class CreateActor(graphene.Mutation):
         return CreateActor(ok=ok, actor=actor_instance)
 
 
-class UpdateActor(graphene.Mutation):
+class UpdateActor(g.Mutation):
     class Arguments:
-        id = graphene.Int(required=True)
+        id = g.Int(required=True)
         input = ActorInput(required=True)
 
-    ok = graphene.Boolean()
-    actor = graphene.Field(ActorType)
+    ok = g.Boolean()
+    actor = g.Field(ActorType)
 
     @staticmethod
     def mutate(root, info, id, input=None):
@@ -93,12 +91,12 @@ class UpdateActor(graphene.Mutation):
 
 
 # Create mutations for movies
-class CreateMovie(graphene.Mutation):
+class CreateMovie(g.Mutation):
     class Arguments:
         input = MovieInput(required=True)
 
-    ok = graphene.Boolean()
-    movie = graphene.Field(MovieType)
+    ok = g.Boolean()
+    movie = g.Field(MovieType)
 
     @staticmethod
     def mutate(root, info, input=None):
@@ -118,13 +116,13 @@ class CreateMovie(graphene.Mutation):
         return CreateMovie(ok=ok, movie=movie_instance)
 
 
-class UpdateMovie(graphene.Mutation):
+class UpdateMovie(g.Mutation):
     class Arguments:
-        id = graphene.Int(required=True)
+        id = g.Int(required=True)
         input = MovieInput(required=True)
 
-    ok = graphene.Boolean()
-    movie = graphene.Field(MovieType)
+    ok = g.Boolean()
+    movie = g.Field(MovieType)
 
     @staticmethod
     def mutate(root, info, id, input=None):
@@ -138,16 +136,16 @@ class UpdateMovie(graphene.Mutation):
               if actor is None:
                 return UpdateMovie(ok=False, movie=None)
               actors.append(actor)
-            movie_instance.title=input.title
-            movie_instance.year=input.yearce.save()
+            movie_instance.title = input.title
+            movie_instance.year = input.yearce.save()
             movie_instance.actors.set(actors)
             return UpdateMovie(ok=ok, movie=movie_instance)
         return UpdateMovie(ok=ok, movie=None)
 
-class Mutation(graphene.ObjectType):
+class Mutation(g.ObjectType):
     create_actor = CreateActor.Field()
     update_actor = UpdateActor.Field()
     create_movie = CreateMovie.Field()
     update_movie = UpdateMovie.Field()
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = g.Schema(query=Query, mutation=Mutation)

@@ -1,4 +1,4 @@
-"""django_graphql_movies URL Configuration
+"""app URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from graphene_django.views import GraphQLView
-from django_graphql_movies.schema import schema
-from django.views.decorators.csrf import csrf_exempt # New library
+from app.schema import schema
+from django.views.decorators.csrf import csrf_exempt  # New library
 
 urlpatterns = [
     path('admin/', admin.site.urls),
