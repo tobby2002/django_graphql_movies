@@ -1,6 +1,9 @@
 # app
 
-This is a sample application to accompany my blog post on [Stack Abuse](https://stackabuse.com/building-a-graphql-api-with-django/). This post introduces GraphQL, designs a schema for movies and details how to create the GraphQL API with Graphene and Django.
+This is a sample application to accompany my blog post on
+ [Stack Abuse](https://stackabuse.com/building-a-graphql-api-with-django/). 
+ This post introduces GraphQL, designs a schema for movies and details 
+ how to create the GraphQL API with Graphene and Django.
 
 Aside from the Django application, this repo also includes the following:
 

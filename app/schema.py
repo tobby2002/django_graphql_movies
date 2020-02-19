@@ -12,4 +12,5 @@ class Mutation(app.movies.schema.Mutation, graphene.ObjectType):
     # as we begin to add more apps to our project
     pass
 
+
 schema = graphene.Schema(query=Query, mutation=Mutation)

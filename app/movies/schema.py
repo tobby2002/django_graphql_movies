@@ -48,11 +48,13 @@ class ActorInput(g.InputObjectType):
     id = g.ID()
     name = g.String()
 
+
 class MovieInput(g.InputObjectType):
     id = g.ID()
     title = g.String()
     actors = g.List(ActorInput)
     year = g.Int()
+
 
 # Create mutations for actors
 class CreateActor(g.Mutation):
