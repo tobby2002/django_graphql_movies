@@ -1,0 +1,87 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type ActorType {
+    id: ID!
+    movieSet: [MovieType]
+    name: String!
+}
+
+type CreateActor {
+    actor: ActorType
+    ok: Boolean
+}
+
+type CreateMovie {
+    movie: MovieType
+    ok: Boolean
+}
+
+type DjangoDebug {
+    sql: [DjangoDebugSQL]
+}
+
+type DjangoDebugSQL {
+    alias: String
+    duration: Float
+    encoding: String
+    isSelect: Boolean
+    isSlow: Boolean
+    isoLevel: String
+    params: String
+    rawSql: String
+    sql: String
+    startTime: Float
+    stopTime: Float
+    transId: String
+    transStatus: String
+    vendor: String
+}
+
+type MovieType {
+    actors: [ActorType]
+    id: ID!
+    title: String!
+    year: Int!
+}
+
+type Mutation {
+    createActor(input: ActorInput!): CreateActor
+    createMovie(input: MovieInput!): CreateMovie
+    updateActor(id: Int!, input: ActorInput!): UpdateActor
+    updateMovie(id: Int!, input: MovieInput!): UpdateMovie
+}
+
+type Query {
+    _debug: DjangoDebug
+    actor(id: Int): ActorType
+    actors: [ActorType]
+    movie(id: Int): MovieType
+    movies: [MovieType]
+}
+
+type UpdateActor {
+    actor: ActorType
+    ok: Boolean
+}
+
+type UpdateMovie {
+    movie: MovieType
+    ok: Boolean
+}
+
+input ActorInput {
+    id: ID
+    name: String
+}
+
+input MovieInput {
+    actors: [ActorInput]
+    id: ID
+    title: String
+    year: Int
+}

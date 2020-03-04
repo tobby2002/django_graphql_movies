@@ -32,3 +32,93 @@ python manage.py runserver
 ```
 
 If you go to http://127.0.0.1:8000/graphql/, you'll be able to interact with the API there.
+
+```bash
+# query e.g.
+query getQuery {
+  actors {
+    id
+    name
+    movieSet {
+      id
+    }
+  }
+  
+}
+
+# mutaion https://stackabuse.com/building-a-graphql-api-with-django/
+
+
+# query 
+query Qactors {
+  actors {
+    id
+    name
+    movieSet {
+      id
+    }
+  }
+}
+
+# query $x
+query Qactors_x($x:Int) {
+  actor(id:$x) {
+    id
+    name
+    movieSet {
+      id
+    }
+  }
+}
+
+{
+  "x": 2
+}
+
+# create $x
+mutation McreateActor_x($x: ActorInput!) {
+  createActor(input: $x) {
+    ok
+    actor {
+      id
+      name
+    }
+  }
+}
+{
+  "x": {
+    "name": "wooaaaasik"
+  } 
+}
+
+# update $xy 
+mutation MupdateActor_xy($x:Int!, $y: ActorInput!) {
+  updateActor( id: $x, input: $y) {
+    ok
+    actor {
+      id
+      name
+    }
+  }
+}
+
+{  
+  "x": 1,
+  "y": {
+   	"name": "good" 
+  }
+}
+
+# create
+mutation createActor {
+  createActor(input: {
+    name: "Tom Hanks"
+  }) {
+    ok
+    actor {
+      id
+      name
+    }
+  }
+}
+```
